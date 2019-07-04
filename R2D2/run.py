@@ -56,12 +56,16 @@ def movies(mov_id):
    cursor = collection.find({'id':mov_id})
    d={}
    s=""
+   f=0
    for i in cursor:
       d["_id"]=i["_id"]
       d["id"]=i["id"]
       d["title"]=i["title"]
       d["rating"]=i["rating"]
       d["cast"]=i["cast"]
+      f+=1
+   if (f==0):
+         return render_template("error.html")
    return render_template("movie_detail.html",**d)
 
 @app1.route("/movie_find",methods=["POST","GET"])
@@ -78,12 +82,16 @@ def movie_find():
       cursor = collection.find({'title':idx_name})
       d={}
       s=""
+      f=0
       for i in cursor:
          d["_id"]=i["_id"]
          d["id"]=i["id"]
          d["title"]=i["title"]
          d["rating"]=i["rating"]
          d["cast"]=i["cast"]
+         f+=1
+      if (f==0):
+         return render_template("error.html")
       return render_template("movie_detail.html",**d)
       
 @app1.route("/api1documentation")

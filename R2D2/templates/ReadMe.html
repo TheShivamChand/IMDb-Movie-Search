@@ -1,0 +1,108 @@
+<html>
+<head>
+<title>
+API-I Documentation
+</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="Start your development with a Design System for Bootstrap 4.">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+<link type="text/css" rel="stylesheet" href="{{url_for('static',filename='nucleo.css')}}">
+<link type="text/css" rel="stylesheet" href="{{url_for('static',filename='font-awesome.min.css')}}">
+<link type="text/css" rel="stylesheet" href="{{url_for('static',filename='argon.min.css')}}">
+<script> 
+	var movies=new Array();
+	var ids=new Array();
+</script>
+<style type="text/css">
+	.ui-element{
+		width: 80%;
+		margin: 5px auto;
+		opacity: 0.9;
+	}
+	body{
+		background: #1c92d2;
+		background: -webkit-linear-gradient(to top, #f2fcfe, #1c92d2);
+		background: linear-gradient(to top, #f2fcfe, #1c92d2);
+	}
+	.in-de{
+		margin: 17% 0 0 0 0;
+	}
+	.lit1{
+		position: absolute;
+		top:200px;
+	}
+	.litbt1{
+		left:100px;
+		top:560px;
+		position: fixed;
+	}
+	.litbt2{
+		left:20px;
+		top:560px;
+		position: fixed;
+	}
+	.yui{
+		width: 100%;
+		height: 100%;
+		position: fixed;
+	}
+	.card-body{
+		margin-top: 10px;
+	}
+
+</style>
+</head>
+<body>
+<header class="navbar navbar-expand navbar-dark flex-row align-items-md-center ct-navbar" style="background: white">
+    <a class="navbar-brand mr-0 mr-md-2" href="/" aria-label="Bootstrap">
+     <h3 class="logohere">IMDB - API</h3>
+     <span style="color:black;">FOR R2D2 ASSIGNMENT</span>
+    </a>
+ 	<a href="/" class="btn btn-1 btn-outline-primary">TEST API I</a>
+	<a href="/movies_api_2" class="btn btn-1 btn-outline-success">TEST API II</a>
+  </header>
+<div class="container">
+	<h1><strong>IMDB Movies</strong></h1>
+    <div class="row"> 
+    	<div class="autocomplete1" style="margin:10px auto;">
+    		<div class="col-sm-12 col-md-12" style="margin:30px auto;">
+      			<div class="card card-lift--hover shadow border-0">
+                	<div class="card-body py-12">
+                  		<h6 class="text-primary text-uppercase">Description</h6>
+                  			<code>
+                  				For scrapping the IMDb website, I used BeautifulSoup. I fetched the top 1000 movies from the website and saved all the required columns as separate lists. After that, I made a dictionary and combined all of them.<br> 
+                  				<a href="/scCode"> The Scrapping code can be found here</a>.<br>
+                  				For the database, I used MongoDB and stored all the data on it.<br>
+                  				As per the question, I fetched all the data from the database and put it on the javascript array. 
+                  				From that, I generated all the suggestions as per the key pressed by the user on the keyboard.
+                  				I used the concept of Longest Common Subsequence(LCS) to match the input string with the names
+                  				of the movies. The suggestions are generated upto 5 as per the given constraints in the descripton. The major observation was to retrieve the data from the database and integrate it with javascript and rendering it through HTML.<br>
+                          	</code>
+                	</div>
+              	</div>
+            </div>
+    		<div class="col-sm-12 col-md-12" style="margin:30px auto;">
+      			<div class="card card-lift--hover shadow border-0">
+                	<div class="card-body py-12">
+                  		<h6 class="text-primary text-uppercase">API-I How to use?</h6>
+                  			<code>
+                  				<strong>Just type the character in the input and the suggestion would appear as per they are valid. Then select the particular movie and click on the search button and you would get the details of that movie.</strong>
+                          	</code>
+                	</div>
+              	</div>
+              </div>
+            <div class="col-sm-12 col-md-12" style="margin:30px auto;">
+      			<div class="card card-lift--hover shadow border-0">
+                	<div class="card-body py-12">
+                  		<h6 class="text-primary text-uppercase">API-II How to use?</h6>
+                  			<code>
+                  				<strong>Just type the ID in the input and the suggestion would appear as per they are valid. Then select the particular ID and click on the search button and you would get the details of that movie related to that id and also you would get the JSON response which should have been returned by an API. The URL is same as the documentation of yours i.e., /movies/&lt;movie_id&gt;</strong>
+                          	</code>
+                	</div>
+              	</div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

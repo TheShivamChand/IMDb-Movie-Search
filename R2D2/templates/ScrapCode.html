@@ -1,0 +1,161 @@
+<html>
+<head>
+<title>
+Scrap Code
+</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="Start your development with a Design System for Bootstrap 4.">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+<link type="text/css" rel="stylesheet" href="{{url_for('static',filename='nucleo.css')}}">
+<link type="text/css" rel="stylesheet" href="{{url_for('static',filename='font-awesome.min.css')}}">
+<link type="text/css" rel="stylesheet" href="{{url_for('static',filename='argon.min.css')}}">
+<script> 
+	var movies=new Array();
+	var ids=new Array();
+</script>
+<style type="text/css">
+	.ui-element{
+		width: 80%;
+		margin: 5px auto;
+		opacity: 0.9;
+	}
+	body{
+		background: #1c92d2;
+		background: -webkit-linear-gradient(to top, #f2fcfe, #1c92d2);
+		background: linear-gradient(to top, #f2fcfe, #1c92d2);
+
+	}
+	.in-de{
+		margin: 17% 0 0 0 0;
+	}
+	.lit1{
+		position: absolute;
+		top:200px;
+	}
+	.litbt1{
+		left:100px;
+		top:560px;
+		position: fixed;
+	}
+	.litbt2{
+		left:20px;
+		top:560px;
+		position: fixed;
+	}
+	.yui{
+		width: 100%;
+		height: 100%;
+		position: fixed;
+	}
+	.card-body{
+		margin-top: 10px;
+	}
+
+</style>
+</head>
+<body>
+<header class="navbar navbar-expand navbar-dark flex-row align-items-md-center ct-navbar" style="background: white">
+    <a class="navbar-brand mr-0 mr-md-2" href="/" aria-label="Bootstrap">
+     <h3 class="logohere">IMDB - API</h3>
+     <span style="color:black;">FOR R2D2 ASSIGNMENT</span>
+    </a>
+ 	<a href="/" class="btn btn-1 btn-outline-primary">TEST API I</a>
+	<a href="/movies_api_2" class="btn btn-1 btn-outline-success">TEST API II</a>
+  </header>
+<div class="container">
+	<h1><strong>Scrapping Code</strong></h1>
+    <div class="row"> 
+    	<div class="autocomplete1" style="margin:10px auto;">
+    		<div class="col-sm-12 col-md-12" style="margin:30px auto;">
+      			<div class="card card-lift--hover shadow border-0">
+                	<div class="card-body py-12">
+                  		<h6 class="text-primary text-uppercase">Code</h6>
+                  			<code>
+from bs4 import BeautifulSoup<br>
+import requests<br>
+movies_title=[]<br>
+movies_rating=[]<br>
+movies_cast=[]<br>
+movies_id=[]<br>
+<br>
+page1=requests.get("https://www.imdb.com/list/ls006266261/?page=1&sort=user_rating,desc&st_dt=&mode=detail")<br>
+soup1=BeautifulSoup(page1.content,'html5lib')<br>
+<br>
+for i in range(1,12):<br>
+    page1=requests.get("https://www.imdb.com/list/ls006266261/?page="+str(i)+"&sort=user_rating,desc&st_dt=&mode=detail")<br>
+    soup1=BeautifulSoup(page1.content,'html.parser')<br>
+    f=soup1.findAll('h3',class_="lister-item-header")<br>
+    for i1 in f:<br>
+        fe=i1.find('a').get_text()<br>
+        fe1=i1.find('a')['href'].split('/')[2]<br>
+        #print(fe1)<br>
+        movies_id.append(fe1)<br>
+        movies_title.append(fe)<br>
+#print(movies_title)<br>
+#print(len(movies_title))<br>
+<br>
+for i in range(1,12):<br>
+    page1=requests.get("https://www.imdb.com/list/ls006266261/?page="+str(i)+"&sort=user_rating,desc&st_dt=&mode=detail")<br>
+    soup1=BeautifulSoup(page1.content,'html.parser')<br>
+    rating = soup1.select("div.lister-item-content")<br>
+    for i in rating:<br>
+        x=(i.find('span','ipl-rating-star__rating').text).split()[0]<br>
+        #print(x)<br>
+        movies_rating.append(x)<br>
+<br>
+movies_cast=[]<br>
+for i in range(1,12):<br>
+    page1=requests.get("https://www.imdb.com/list/ls006266261/?page="+str(i)+"&sort=user_rating,desc&st_dt=&mode=detail")<br>
+    soup1=BeautifulSoup(page1.content,'html.parser')<br>
+    cast=soup1.select("div.lister-item-content")<br>
+    for i in range(len(cast)):<br>
+        x=(cast[i].findAll('p'))<br>
+        d=x[2].text<br>
+        idx=d.find("Stars:")<br>
+        pro=d[idx+6:]<br>
+        mlist=pro.split("\n")<br>
+        mlist="".join(mlist).strip().split(',')<br>
+        org_list=[]<br>
+        for i in mlist:<br>
+            org_list.append(i.strip())<br>
+        movies_cast.append(org_list)<br>
+        #print(org_list)<br>
+<br>
+final = []<br>
+for i in range(1000):<br>
+    mydict = {}<br>
+    mydict['id'] = movies_id[i]<br>
+    mydict['title'] = movies_title[i]<br>
+    mydict['rating']  = movies_rating[i]<br>
+    mydict['cast'] = movies_cast[i]<br>
+    final.append(mydict)<br>
+<br>
+final<br>
+<br>
+from pymongo import MongoClient <br>
+  <br>
+try: <br>
+    conn = MongoClient()<br> 
+    print("Connected successfully!!!")<br> 
+except:   <br>
+    print("Could not connect to MongoDB")<br>
+db = conn.database<br>
+<br>
+collection=db.test<br>
+for i in final:<br>
+    collection.insert_one(i)<br>
+    print(i)<br>
+<br>
+cursor = collection.find() <br>
+for record in cursor: <br>
+    print(record) <br>
+    print()<br>
+                      	</code>
+                	</div>
+              	</div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
